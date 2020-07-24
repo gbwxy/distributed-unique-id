@@ -1,0 +1,46 @@
+server:
+  port: 31103
+  servlet:
+    context-path: /uuid
+
+spring:
+  redis:
+    host: 10.254.7.226
+    port: 6379
+    password: cloudos
+    database: 1
+    timeout: 5000
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+  datasource:
+    username: root
+    password: cloudos
+    url: jdbc:mysql://10.254.7.226:3306/uuid_demo?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false&zeroDateTimeBehavior=convertToNull
+  rabbitmq:
+    pay:
+      host: 10.254.7.226
+      port: 5672
+      username: openstack
+      password: cloudos
+      virtual-host: /
+      publisher-confirms: true
+      publisher-returns: true
+      listener:
+        acknowledge-mode: none
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+mybatis:
+  type-aliases-package: uco.dbaas.openapi.entity
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
