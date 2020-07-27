@@ -1,12 +1,12 @@
-package gbwxy.distributed.id.service;
+package com.gbwxy.dist.uid.service;
 
 
-import gbwxy.distributed.id.Snowflake.SnowflakeIdWorker;
-import gbwxy.distributed.id.common.DigitalCalculateUtils;
-import gbwxy.distributed.id.common.ParamValidateUtils;
-import gbwxy.distributed.id.common.PropertyFactory;
-import gbwxy.distributed.id.entity.Result;
-import gbwxy.distributed.id.entity.Status;
+import com.gbwxy.dist.uid.mt.snowflake.SnowflakeIdWorker;
+import com.gbwxy.dist.uid.mt.common.PropertyFactory;
+import com.gbwxy.dist.uid.mt.entity.Result;
+import com.gbwxy.dist.uid.mt.entity.Status;
+import com.gbwxy.dist.uid.mt.common.DigitalCalculateUtils;
+import com.gbwxy.dist.uid.mt.common.ParamValidateUtils;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,12 +22,12 @@ import java.util.Properties;
  * @Date 2020/7/22
  */
 @Service
-public class SnowflakeService {
-    private Logger logger = LoggerFactory.getLogger(SnowflakeService.class);
+public class MLeafSnowflakeService {
+    private Logger logger = LoggerFactory.getLogger(MLeafSnowflakeService.class);
     private SnowflakeIdWorker serviceIdGen;
     private SnowflakeIdWorker instanceIdGen;
 
-    public SnowflakeService(Environment... environments) {
+    public MLeafSnowflakeService(Environment... environments) {
         Properties properties = PropertyFactory.getProperties();
         String zkAddress = properties.getProperty("id.snowflake.zk.address");
         String zkPort = properties.getProperty("id.snowflake.zk.port");
@@ -59,16 +59,41 @@ public class SnowflakeService {
         }
     }
 
-    public String getInstanceId_Condition(String productionName) {
-        if (!ParamValidateUtils.validateProdName(productionName)) {
-            throw new RuntimeException("No productionName! Your bad param is:[" + productionName + "], param rule:mix of [0~9] or [a~z] or [-] or [_], and digital first or letter first and length between [1-5].");
+    public long GetId() {
+        Result idInstance = this.instanceIdGen.getID();
+        if (idInstance.getStatus().equals(Status.EXCEPTION)) {
+            throw new RuntimeException(idInstance.toString());
+        } else {
+            long snowflakeId = idInstance.getId();
+            return snowflakeId;
+        }
+    }
+
+
+    public String GetIdWithPrefix(String Prefix) {
+        if (!ParamValidateUtils.validateProdName(Prefix)) {
+            throw new RuntimeException("No Prefix. Your bad param is:[" + Prefix + "], param rule:mix of [0~9] or [a~z] or [-] or [_], and digital first or letter first and length between [1-5].");
+        } else {
+            Result idInstance = this.instanceIdGen.getID();
+            if (idInstance.getStatus().equals(Status.EXCEPTION)) {
+                throw new RuntimeException(idInstance.toString());
+            } else {
+                return Prefix + "-" + idInstance.getId();
+            }
+        }
+    }
+
+
+    public String GetIdConditionWithPrefix(String Prefix) {
+        if (!ParamValidateUtils.validateProdName(Prefix)) {
+            throw new RuntimeException("No Prefix. Your bad param is:[" + Prefix + "], param rule:mix of [0~9] or [a~z] or [-] or [_], and digital first or letter first and length between [1-5].");
         } else {
             Result idInstance = this.instanceIdGen.getID();
             if (idInstance.getStatus().equals(Status.EXCEPTION)) {
                 throw new RuntimeException(idInstance.toString());
             } else {
                 String snowflakeId = DigitalCalculateUtils.transferFrom10to36(Long.valueOf(idInstance.getId()));
-                return productionName + "-" + snowflakeId;
+                return Prefix + "-" + snowflakeId;
             }
         }
     }

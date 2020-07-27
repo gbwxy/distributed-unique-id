@@ -1,4 +1,4 @@
-package gbwxy.distributed.id;
+package com.gbwxy.dist.uid;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

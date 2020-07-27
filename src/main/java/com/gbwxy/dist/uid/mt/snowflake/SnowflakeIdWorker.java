@@ -1,12 +1,12 @@
-package gbwxy.distributed.id.Snowflake;
+package com.gbwxy.dist.uid.mt.snowflake;
 
 
 
-import gbwxy.distributed.id.common.NetworkUtils;
-import gbwxy.distributed.id.common.ParamValidateUtils;
-import gbwxy.distributed.id.common.PropertyFactory;
-import gbwxy.distributed.id.entity.Result;
-import gbwxy.distributed.id.entity.Status;
+import com.gbwxy.dist.uid.mt.common.NetworkUtils;
+import com.gbwxy.dist.uid.mt.common.ParamValidateUtils;
+import com.gbwxy.dist.uid.mt.common.PropertyFactory;
+import com.gbwxy.dist.uid.mt.entity.Result;
+import com.gbwxy.dist.uid.mt.entity.Status;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

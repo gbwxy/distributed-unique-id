@@ -1,4 +1,4 @@
-package gbwxy.distributed.id.common;
+package com.gbwxy.dist.uid.mt.common;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

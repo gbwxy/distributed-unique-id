@@ -1,4 +1,4 @@
-package gbwxy.distributed.id.Snowflake;
+package com.gbwxy.dist.uid.mt.snowflake;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

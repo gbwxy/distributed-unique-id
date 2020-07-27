@@ -1,4 +1,4 @@
-package gbwxy.distributed.id.entity;
+package com.gbwxy.dist.uid.mt.entity;
 
 /**
  * 描述：

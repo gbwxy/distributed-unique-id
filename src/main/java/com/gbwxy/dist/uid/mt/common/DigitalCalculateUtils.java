@@ -1,4 +1,4 @@
-package gbwxy.distributed.id.common;
+package com.gbwxy.dist.uid.mt.common;
 
 import java.util.Stack;
 
